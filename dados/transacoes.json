@@ -1,0 +1,37 @@
+[
+  {
+    "id": "001",
+    "valor": 150.00,
+    "moeda": "USD",
+    "data": "2024-01-15",
+    "descricao": "Pagamento de serviço"
+  },
+  {
+    "id": "002",
+    "valor": 89.90,
+    "moeda": "EUR",
+    "data": "2024-01-16",
+    "descricao": "Compra online"
+  },
+  {
+    "id": "003",
+    "valor": 320.50,
+    "moeda": "USD",
+    "data": "2024-01-17",
+    "descricao": "Transferência"
+  },
+  {
+    "id": "004",
+    "valor": 45.00,
+    "moeda": "BRL",
+    "data": "2024-01-18",
+    "descricao": "Pagamento de assinatura"
+  },
+  {
+    "id": "005",
+    "valor": 1200.00,
+    "moeda": "EUR",
+    "data": "2024-01-19",
+    "descricao": "Compra de equipamento"
+  }
+]
