@@ -1,5 +1,13 @@
-from ingestao import carregar_transacoes
+from ingestao import carregar_transacoes, carregar_taxas
 
-transacoes = carregar_transacoes("dados/transacoes.json")
-for t in transacoes:
-    print(t)
+
+def main():
+    transacoes = carregar_transacoes("dados/transacoes.json")
+    print(f"{len(transacoes)} transações carregadas.")
+
+    taxas = carregar_taxas("dados/taxas.json")
+    print(f"Taxas: {taxas}")
+
+
+if __name__ == "__main__":
+    main()
