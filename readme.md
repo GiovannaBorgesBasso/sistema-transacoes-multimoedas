@@ -39,15 +39,18 @@ TrabalhoFinal_LPP/
 ## Como Executar
 
 ```bash
-python main.py
+python3 -m pip install -r requirements.txt
+python3 main.py          # roda a pipeline (busca taxas se o cache estiver vazio/velho)
+python3 fetch_taxas.py   # atualiza as taxas manualmente (opcional)
+python3 -m pytest        # roda os testes
 ```
 
 ## Status
 
-- [x] Ingestão de transações
-- [x] Carregamento de taxas com cache TTL
-- [ ] Normalização
-- [ ] Conversão para BRL
-- [ ] Filtragem
-- [ ] Saída (JSON + relatório)
-- [ ] Testes
+- [x] Ingestão de transações (com validação de malformadas)
+- [x] Carregamento de taxas com cache TTL (24h)
+- [x] Normalização
+- [x] Conversão para BRL
+- [x] Filtragem componível (critérios + combinadores)
+- [x] Saída (JSON + relatório)
+- [x] Testes (27 passando)
