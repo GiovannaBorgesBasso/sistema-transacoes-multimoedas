@@ -12,3 +12,6 @@ env/
 
 # Arquivos de saída do projeto
 saida.json
+
+# Material da disciplina
+*.pdf
