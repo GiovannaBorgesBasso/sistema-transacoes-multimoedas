@@ -1,0 +1,14 @@
+# Byte-compiled / cache
+__pycache__/
+*.pyc
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# VS Code
+.vscode/
+
+# Arquivos de saída do projeto
+saida.json
