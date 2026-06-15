@@ -23,7 +23,7 @@ sem nunca alterar a entrada. Isso nos dá três coisas que guiaram todo o design
 - **Imutabilidade** — cada etapa produz uma nova versão; a anterior continua intacta.
 - **Previsibilidade** — função pura: mesma entrada, mesma saída, sem efeito colateral.
 - **Testabilidade** — sem estado escondido nem I/O no meio, testar é só passar um valor
-  e conferir o retorno (daí os 27 testes rodarem sem rede nem mocks).
+  e conferir o retorno (daí os 29 testes rodarem sem rede nem mocks).
 
 ## Arquitetura: núcleo puro, efeitos nas bordas
 
@@ -71,16 +71,17 @@ relance.
 
 - **Filtragem componível por funções de alta ordem.** `filtrar` recebe um *critério*
   (uma função). Em cima disso há blocos pequenos — `valor_minimo`, `por_moeda` — e
-  combinadores — `e_`, `ou_` — que se compõem sem código novo:
+  combinadores — `e_`, `ou_`, `nao_` — que se compõem sem código novo. É exatamente
+  o que `main.py` faz para montar a regra do relatório:
 
   ```python
-  filtrar(txs, e_(valor_minimo(100), por_moeda("USD")))   # "USD acima de 100 BRL"
+  # câmbio relevante = acima do mínimo E moeda estrangeira (BRL→BRL não é conversão)
+  cambio_relevante = e_(valor_minimo(100), nao_(por_moeda("BRL")))
+  filtrar(convertidas, cambio_relevante)
   ```
 
   É aqui que o paradigma aparece mais claro: funções que recebem **e** retornam funções.
-
-> Fundamentação completa de cada decisão em
-> [`docs/superpowers/specs/2026-06-14-multicoin-pipeline-design.md`](docs/superpowers/specs/2026-06-14-multicoin-pipeline-design.md).
+  A regra de negócio vira uma expressão legível, sem `if` espalhado pela pipeline.
 
 ## Estrutura
 
@@ -92,11 +93,14 @@ transformacao.py   # núcleo puro: normalizar, converter, filtrar
 saida.py           # borda de escrita: JSON + relatório
 fetch_taxas.py     # busca taxas reais na API (standalone)
 dados/             # transacoes.json (entrada), taxas.json (cache)
-tests/             # 27 testes — todos sem rede
-docs/              # spec e plano de implementação
+tests/             # 29 testes — todos sem rede
 ```
 
 ## Como executar
+
+Requer **Python 3.10+** (usa o operador `|` em anotações de tipo). A pipeline em si
+roda só com a biblioteca padrão; `requirements.txt` (`pytest`) é necessário apenas
+para os testes.
 
 ```bash
 python3 -m pip install -r requirements.txt
@@ -104,3 +108,32 @@ python3 main.py          # roda a pipeline (busca taxas se o cache estiver vazio
 python3 fetch_taxas.py   # atualiza as taxas manualmente (opcional)
 python3 -m pytest        # roda os testes
 ```
+
+## Dados de exemplo
+
+`dados/transacoes.json` traz ~15 transações em **seis moedas** — USD, EUR, GBP,
+JPY, ARS e BRL — com valores calibrados pelas taxas reais. Além das transações
+normais, o fixture inclui casos de borda de propósito, para mostrar que cada
+etapa da pipeline trata o dado "sujo" sem derrubar o processo:
+
+- **valor abaixo do mínimo** (R$100) → convertido, mas cortado na *filtragem*;
+- **transação malformada** (valor não numérico) → descartada na *ingestão* com aviso;
+- **moeda sem taxa** (`XYZ`) → descartada na *conversão*;
+- **transações em BRL** → fora do relatório pelo critério de câmbio (`nao_(por_moeda("BRL"))`).
+
+Das 15 entradas, 9 chegam ao relatório consolidado:
+
+```
+=== Relatório Consolidado ===
+Transações: 9
+Total: R$ 17143.21
+Média: R$ 1904.80
+Por moeda de origem:
+  USD: 2 transações, R$ 2389.10
+  EUR: 2 transações, R$ 7592.61
+  GBP: 1 transações, R$ 1363.90
+  JPY: 2 transações, R$ 2472.60
+  ARS: 2 transações, R$ 3325.00
+```
+
+Os totais variam conforme a cotação do dia (taxas reais via API).

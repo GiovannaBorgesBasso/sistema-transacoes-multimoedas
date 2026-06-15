@@ -63,3 +63,8 @@ def e_(*criterios):
 def ou_(*criterios):
     """Combinador OR: passa se algum critério passa."""
     return lambda t: any(c(t) for c in criterios)
+
+
+def nao_(criterio):
+    """Combinador NOT: inverte um critério."""
+    return lambda t: not criterio(t)
