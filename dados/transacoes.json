@@ -8,24 +8,24 @@
   },
   {
     "id": "002",
+    "valor": 320.50,
+    "moeda": "USD",
+    "data": "2024-01-17",
+    "descricao": "Transferência internacional"
+  },
+  {
+    "id": "003",
+    "valor": 9.90,
+    "moeda": "USD",
+    "data": "2024-01-18",
+    "descricao": "Microcompra app store"
+  },
+  {
+    "id": "004",
     "valor": 89.90,
     "moeda": "EUR",
     "data": "2024-01-16",
     "descricao": "Compra online"
-  },
-  {
-    "id": "003",
-    "valor": 320.50,
-    "moeda": "USD",
-    "data": "2024-01-17",
-    "descricao": "Transferência"
-  },
-  {
-    "id": "004",
-    "valor": 45.00,
-    "moeda": "BRL",
-    "data": "2024-01-18",
-    "descricao": "Pagamento de assinatura"
   },
   {
     "id": "005",
@@ -33,5 +33,75 @@
     "moeda": "EUR",
     "data": "2024-01-19",
     "descricao": "Compra de equipamento"
+  },
+  {
+    "id": "006",
+    "valor": 200.00,
+    "moeda": "GBP",
+    "data": "2024-01-20",
+    "descricao": "Assinatura anual SaaS"
+  },
+  {
+    "id": "007",
+    "valor": 12.00,
+    "moeda": "GBP",
+    "data": "2024-01-21",
+    "descricao": "Taxa de envio"
+  },
+  {
+    "id": "008",
+    "valor": 50000,
+    "moeda": "JPY",
+    "data": "2024-01-22",
+    "descricao": "Hospedagem evento Tóquio"
+  },
+  {
+    "id": "009",
+    "valor": 28000,
+    "moeda": "JPY",
+    "data": "2024-01-23",
+    "descricao": "Compra de periféricos"
+  },
+  {
+    "id": "010",
+    "valor": 150000,
+    "moeda": "ARS",
+    "data": "2024-01-24",
+    "descricao": "Consultoria Buenos Aires"
+  },
+  {
+    "id": "011",
+    "valor": 800000,
+    "moeda": "ARS",
+    "data": "2024-01-25",
+    "descricao": "Aluguel temporário"
+  },
+  {
+    "id": "012",
+    "valor": 250.00,
+    "moeda": "BRL",
+    "data": "2024-01-26",
+    "descricao": "Pagamento fornecedor local"
+  },
+  {
+    "id": "013",
+    "valor": 45.00,
+    "moeda": "BRL",
+    "data": "2024-01-18",
+    "descricao": "Pagamento de assinatura"
+  },
+  {
+    "id": "014",
+    "valor": "cento e vinte",
+    "moeda": "USD",
+    "data": "2024-01-27",
+    "descricao": "Lançamento com valor inválido"
+  },
+  {
+    "id": "015",
+    "valor": 500.00,
+    "moeda": "XYZ",
+    "data": "2024-01-28",
+    "descricao": "Moeda sem taxa cadastrada"
   }
 ]
