@@ -1,6 +1,6 @@
 """Orquestrador da pipeline de processamento de transações multimoedas."""
 from ingestao import carregar_transacoes, carregar_taxas
-from transformacao import normalizar, converter, filtrar, valor_minimo
+from transformacao import normalizar, converter, filtrar, valor_minimo, por_moeda, e_, nao_
 from saida import exportar_json, gerar_relatorio, imprimir_relatorio
 
 CAMINHO_TRANSACOES = "dados/transacoes.json"
@@ -17,7 +17,11 @@ def main():
     # Transformação (núcleo puro)
     normalizadas = [normalizar(t) for t in brutas]
     convertidas = [c for c in (converter(t, taxas) for t in normalizadas) if c is not None]
-    relevantes = filtrar(convertidas, valor_minimo(VALOR_MINIMO_BRL))
+
+    # Critério composto: câmbio relevante = acima do mínimo E moeda estrangeira.
+    # BRL→BRL (taxa 1.0) não é conversão, então fica de fora do relatório de câmbio.
+    cambio_relevante = e_(valor_minimo(VALOR_MINIMO_BRL), nao_(por_moeda("BRL")))
+    relevantes = filtrar(convertidas, cambio_relevante)
 
     # Saída (borda)
     exportar_json(relevantes, CAMINHO_SAIDA)

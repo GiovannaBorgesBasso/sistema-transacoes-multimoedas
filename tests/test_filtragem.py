@@ -1,5 +1,5 @@
 from modelos import TransacaoConvertida
-from transformacao import filtrar, valor_minimo, por_moeda, e_, ou_
+from transformacao import filtrar, valor_minimo, por_moeda, e_, ou_, nao_
 
 
 def _tc(id, valor_brl, moeda):
@@ -30,6 +30,16 @@ def test_combinador_e():
 def test_combinador_ou():
     r = filtrar(TXS, ou_(por_moeda("EUR"), valor_minimo(300)))
     assert {t.id for t in r} == {"2", "3"}
+
+
+def test_combinador_nao():
+    r = filtrar(TXS, nao_(por_moeda("USD")))
+    assert {t.id for t in r} == {"2"}
+
+
+def test_combinador_composto_e_nao():
+    r = filtrar(TXS, e_(valor_minimo(100), nao_(por_moeda("USD"))))
+    assert {t.id for t in r} == {"2"}
 
 
 def test_filtrar_lista_vazia():
