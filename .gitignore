@@ -12,3 +12,9 @@ env/
 
 # Arquivos de saída do projeto
 saida.json
+
+# Material da disciplina
+*.pdf
+
+# Artefatos do superpowers (spec/plano locais, fora do repo)
+docs/superpowers/
